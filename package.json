@@ -1,0 +1,35 @@
+{
+  "name": "ds-sesi-2026-1-gp4-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SENAI-Cotia/DS-SESI-2026-1-GP4-BACKEND.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SENAI-Cotia/DS-SESI-2026-1-GP4-BACKEND/issues"
+  },
+  "homepage": "https://github.com/SENAI-Cotia/DS-SESI-2026-1-GP4-BACKEND#readme",
+  "dependencies": {
+    "@prisma/client": "^7.7.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "prisma": "^7.7.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}
