@@ -11,3 +11,53 @@ generator client {
 datasource db {
   provider = "sqlite"
 }
+
+model Usuario {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique // nao pode repetir o email
+  nome         String
+  telefone     String
+  cpf          String @unique
+  password     String
+  tipoUsuario String
+  pedidos      Pedido[] // um usuario pode ter varios pedidos
+}
+
+model Pedido {
+  id          Int          @id @default(autoincrement())
+  status      String
+  total       Float
+  senha       Int
+  usuarioId   Int // guarda o id do usuario
+  itens       ItemPedido[] // um pedido pode ter varios itens
+  PagamentoId Int
+  usuario     Usuario      @relation(fields: [usuarioId], references: [id]) // liga as tabelas
+  pagamento   Pagamento?
+}
+
+model ItemPedido {
+  id         Int      @id @default(autoincrement())
+  quantidade Int
+  pedidoId   Int
+  pedido     Pedido   @relation(fields: [pedidoId], references: [id]) // liga as tabelas
+  alimentoId Int
+  alimento   Alimento @relation(fields: [alimentoId], references: [id]) // liga as tabelas
+}
+
+model Alimento {
+  id           Int          @id @default(autoincrement())
+  nome         String
+  preco        Float
+  validade     String
+  ingredientes String
+  unidades     Int
+  itens        ItemPedido[]
+}
+
+model Pagamento {
+  id       Int   @id @default(autoincrement())
+  valor    Float
+  pedidoId Int   @unique
+
+  pedido Pedido @relation(fields: [pedidoId], references: [id]) // liga as tabelas
+}
