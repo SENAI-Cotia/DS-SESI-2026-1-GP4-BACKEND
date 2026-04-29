@@ -1,15 +1,11 @@
-import express from "express";
+import express, { Router } from "express";
 
 import bcrypt from "bcrypt";
 import prisma from "../lib/prisma";
-import { error } from "node:console";
 
+const app = Router();
 
-const app = express();
-
-app.use(express.json());
-
-
+//////////////////////////////// Login do Usuário /////////////////////////////
 //Retorna o tipo do usuário
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
@@ -28,7 +24,7 @@ app.post("/login", async (req, res) => {
     return res.status(200).json("Login realizado com sucesso!")
 });
 
-//Cadastro do usuário
+///////////////////////////////Cadastro do usuário//////////////////////
 app.post("/cadastro", async (req, res) => {
     const { nome, email, telefone, cpf, password, tipoUsuario, codigoFuncionario } = req.body;
 
@@ -61,3 +57,6 @@ app.post("/cadastro", async (req, res) => {
         usuario
     })
 })
+
+
+export default app
