@@ -13,26 +13,25 @@ datasource db {
 }
 
 model Usuario {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique // nao pode repetir o email
-  nome         String
-  telefone     String
-  cpf          String @unique
-  password     String
+  id          Int      @id @default(autoincrement())
+  email       String   @unique // nao pode repetir o email
+  nome        String
+  telefone    String
+  cpf         String   @unique
+  password    String
   tipoUsuario String
-  pedidos      Pedido[] // um usuario pode ter varios pedidos
+  pedidos     Pedido[] // um usuario pode ter varios pedidos
 }
 
 model Pedido {
-  id          Int          @id @default(autoincrement())
-  status      String
-  total       Float
-  senha       Int
-  usuarioId   Int // guarda o id do usuario
-  itens       ItemPedido[] // um pedido pode ter varios itens
-  PagamentoId Int
-  usuario     Usuario      @relation(fields: [usuarioId], references: [id]) // liga as tabelas
-  pagamento   Pagamento?
+  id        Int          @id @default(autoincrement())
+  status    String
+  total     Float
+  senha     Int
+  usuarioId Int // guarda o id do usuario
+  itens     ItemPedido[] // um pedido pode ter varios itens
+  usuario   Usuario      @relation(fields: [usuarioId], references: [id]) // liga as tabelas
+  pagamento Pagamento?
 }
 
 model ItemPedido {
@@ -55,9 +54,8 @@ model Alimento {
 }
 
 model Pagamento {
-  id       Int   @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   valor    Float
-  pedidoId Int   @unique
-
-  pedido Pedido @relation(fields: [pedidoId], references: [id]) // liga as tabelas
+  pedidoId Int @unique
+  pedidos  Pedido @relation(fields: [pedidoId], references: [id])
 }
