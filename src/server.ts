@@ -1,12 +1,16 @@
 import express from "express";
-import userRoutes from "./routes/usuario.routes"
+import userRoutes from "./routes/usuario.route"
 import alimentoRoutes from "./routes/alimento.route"
+import pedidoRoutes from "./routes/pedido.route"
+
 
 const app = express();
 
 app.use(express.json());
 app.use(userRoutes)
 app.use(alimentoRoutes)
+app.use(pedidoRoutes)
+
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
