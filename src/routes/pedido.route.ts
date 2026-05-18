@@ -60,7 +60,6 @@ app.post("/pedido", async (req, res) => { //Rota para criar o pedido
 ////////////////////////////////////////////Status Pedido ///////////////////////////////////////
 app.put("/pedido/:id/status", async (req, res) => {
   const {id} = req.params; // pega o id do pedido pela url
-  const status = req.params; // pega o novo status do body
   try {
     const pedidoAtualizado = await prisma.pedido.update ({
         where: {
