@@ -32,6 +32,7 @@ model Pedido {
   itens     ItemPedido[] // um pedido pode ter varios itens
   usuario   Usuario      @relation(fields: [usuarioId], references: [id]) // liga as tabelas
   pagamento Pagamento?
+  createdAt DateTime @default(now())
 }
 
 model ItemPedido {

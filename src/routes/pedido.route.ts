@@ -59,25 +59,57 @@ app.post("/pedido", async (req, res) => { //Rota para criar o pedido
 
 ////////////////////////////////////////////Status Pedido ///////////////////////////////////////
 app.put("/pedido/:id/status", async (req, res) => {
-  const {id} = req.params; // pega o id do pedido pela url
-  const status = req.params; // pega o novo status do body
-  try {
-    const pedidoAtualizado = await prisma.pedido.update ({
-        where: {
-            id: Number(id) // converte para numero
+    const { id } = req.params; // pega o id do pedido pela url
+    const status = req.body.status; // req.body   dados enviados, o status ta no body
+    try {
+        const pedidoAtualizado = await prisma.pedido.update({
+            where: {
+                id: Number(id) // converte para numero
 
-        },
-        data: {
-            status: req.body.status //  novo status (pendente , concluido e cancelado)
+            },
+            data: {
+                status: req.body.status //  novo status (pendente , concluido e cancelado)
 
-        }
-    });
-    res.status(200).json(pedidoAtualizado);
-  } catch (error) {
-    console.log(error); 
-    res.status(500).json({error: "Erro ao atualizar status do pedido"})
-  }
-} )
+            }
+        });
+        res.status(200).json(pedidoAtualizado);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Erro ao atualizar status do pedido" })
+    }
+})
+
+
+
+////////////////////////////////////// Listar pedidos do dia ////////////////////////////////////
+
+app.get("/pedido/hoje", async (req, res) => {
+    try {
+        const inicioDia = new Date(); // pega início do dia (00:00)
+        inicioDia.setHours(0, 0, 0, 0);
+
+        const fimDia = new Date(); // pega fim do dia (23:59)
+        fimDia.setHours(23, 59, 59, 999);
+        // busca pedidos do dia
+        const pedidos = await prisma.pedido.findMany({
+            where: {
+                createdAt: {
+                    gte: inicioDia, //gte -> maior ou igual ao começo do dia
+                    lte: fimDia // lte -> menor ou igual ao fim do dia
+                }
+            },
+            include: {
+                itens: true
+            }
+        });
+        res.status(200).json(pedidos);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Erro ao listar pedidos do dia" });
+    }
+});
+
+
 
 
 export default app
